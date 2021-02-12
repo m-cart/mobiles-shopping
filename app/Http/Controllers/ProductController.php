@@ -99,7 +99,7 @@ class ProductController extends Controller
             $order->user_id=$cart['user_id'];
             $order->payment_method=$req->payment;
             $order->address=$req->address;
-            $order->status="pending";
+            $order->status="Pending";
             $order->save();
             Cart::where('user_id',$userId)->delete(); 
         }
@@ -185,5 +185,31 @@ class ProductController extends Controller
                     alert("Product details updated"); 
                     window.location.href="/admin";
                 </script>';
+    }
+    public function customerOrders()
+    {
+        $orders = Order::all();
+        return view('admin/customerorders',['orders'=>$orders]);
+    }
+    public function placed($id)
+    {
+        $order = Order::find($id);
+        $order->status = "Placed";
+        $order->save();
+        return redirect ('customerorders');
+    }
+    public function shipped($id)
+    {
+        $order = Order::find($id);
+        $order->status = "Shipped";
+        $order->save();
+        return redirect ('customerorders');
+    }
+    public function delivered($id)
+    {
+        $order = Order::find($id);
+        $order->status = "Delivered";
+        $order->save();
+        return redirect ('customerorders');
     }
 }

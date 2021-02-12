@@ -4,7 +4,7 @@
 		<div class="container py-lg-5">
 			<div class="text-txt row">
 				<div class="left-side col-lg-4">
-					<h3><a class="logo-footer" href="">
+					<h3><a class="logo-footer" href="admin">
 						m-cart</a></h3>
 					<!-- if logo is image enable this   
 								<a class="navbar-brand" href="#index.html">
@@ -32,10 +32,10 @@
 							<h6>Useful Links</h6>
 							<div class="footer-hny-ul">
 								<ul>
-									<li><a href="">Home</a></li>
+									<li><a href="admin">Home</a></li>
 									<li><a href="#">About</a></li>
 									<li><a href="#">Blog</a></li>
-									<li><a href="">Contact</a></li>
+									<li><a href="#">Contact</a></li>
 								</ul>
 								<ul>
 									<li><a href="#">Careers</a></li>

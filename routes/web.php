@@ -45,3 +45,7 @@ Route::get('/contact', function () {  return view('contact');   });
 Route::get('/admin','App\Http\Controllers\ProductController@adminHome');
 Route::get('/edit/{id}','App\Http\Controllers\ProductController@editProduct');
 Route::put('/update/{id}','App\Http\Controllers\ProductController@updateProduct');
+Route::get('/customerorders','App\Http\Controllers\ProductController@customerOrders');
+Route::get('/placed/{id}','App\Http\Controllers\ProductController@placed');
+Route::get('/shipped/{id}','App\Http\Controllers\ProductController@shipped');
+Route::get('/delivered/{id}','App\Http\Controllers\ProductController@delivered');
