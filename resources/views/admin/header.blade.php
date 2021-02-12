@@ -71,7 +71,7 @@
 								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href=""><span class="fa fa-user" style="font-size:24px" aria-hidden="true"></span>&nbsp;&nbsp;Hi Admin</a>
 								<div class="dropdown-menu bg-secondary">
 									<a class="dropdown-item" href="#">My Account</a>
-									<a class="dropdown-item" href="/login">Logout</a>
+									<a class="dropdown-item" href="/adminlogout">Logout</a>
 								</div>
 							</li>
 						</ul>

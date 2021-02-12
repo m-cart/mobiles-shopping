@@ -47,7 +47,7 @@
                             </tr>
                             @endforeach
                             <tr>
-                                <td colspan="2"><a href="admin/home" class="btn btn-info">Go back</a> </td>
+                                <td colspan="2"><a href="admin" class="btn btn-info">Go back</a> </td>
                             </tr>
                         </tbody>
                     </table>

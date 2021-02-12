@@ -12,14 +12,15 @@ class UserController extends Controller
     public function login(Request $req)
     {
         $user =  User::where(['email'=>$req->email])->first();
-        if($req->email == 'admin@gmail.com' && $req->password == 'admin')
+        if($req->email == 'admin@gmail.com' && Hash::check($req->password,$user->password))
         {
+            $req->session()->put('admin',$user);
             return redirect('/admin');
         }
         else if(!$user || !Hash::check($req->password,$user->password))
         {
             return '<script>
-                        alert("Incorrect email and password!!"); 
+                        alert("Incorrect email or password!!"); 
                         window.location.href="/login";
                     </script>';
         }

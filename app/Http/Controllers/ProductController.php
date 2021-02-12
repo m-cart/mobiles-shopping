@@ -105,7 +105,7 @@ class ProductController extends Controller
         }
         $req->input();
         return '<script>
-                    alert("Your orders has been successfully placed. Please click My Orders to see your orders.");
+                    alert("Your orders has been successfully placed. Please click My Orders to track your orders.");
                     window.location.href="/";
                 </script>';
     }
@@ -131,16 +131,25 @@ class ProductController extends Controller
     //Admin
     public function adminHome()
     {
+        if(!session()->has('admin')){
+            abort(404);  
+        }
         $products = Product::all();
         return view('admin/home',['products'=>$products]);
     }
     public function editProduct($id)
     {
+        if(!session()->has('admin')){
+            abort(404);  
+        }
         $product = Product::find($id);
         return view('admin/editproduct',['product'=>$product]);
     }
     public function updateProduct(Request $req, $id)
     {
+        if(!session()->has('admin')){
+            abort(404);  
+        }
         $this->validate($req, [
             'product_name1' => 'required|min:4',
             'product_old_price' => 'required|numeric|min:4000|max:100000',
@@ -188,11 +197,17 @@ class ProductController extends Controller
     }
     public function customerOrders()
     {
+        if(!session()->has('admin')){
+            abort(404);  
+        }
         $orders = Order::all();
         return view('admin/customerorders',['orders'=>$orders]);
     }
     public function placed($id)
     {
+        if(!session()->has('admin')){
+            abort(404);  
+        }
         $order = Order::find($id);
         $order->status = "Placed";
         $order->save();
@@ -200,6 +215,9 @@ class ProductController extends Controller
     }
     public function shipped($id)
     {
+        if(!session()->has('admin')){
+            abort(404);  
+        }
         $order = Order::find($id);
         $order->status = "Shipped";
         $order->save();
@@ -207,6 +225,9 @@ class ProductController extends Controller
     }
     public function delivered($id)
     {
+        if(!session()->has('admin')){
+            abort(404);  
+        }
         $order = Order::find($id);
         $order->status = "Delivered";
         $order->save();

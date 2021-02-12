@@ -49,3 +49,8 @@ Route::get('/customerorders','App\Http\Controllers\ProductController@customerOrd
 Route::get('/placed/{id}','App\Http\Controllers\ProductController@placed');
 Route::get('/shipped/{id}','App\Http\Controllers\ProductController@shipped');
 Route::get('/delivered/{id}','App\Http\Controllers\ProductController@delivered');
+
+Route::get('/adminlogout', function () {
+    Session::forget('admin');
+    return redirect('login');
+});
