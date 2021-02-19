@@ -61,18 +61,19 @@ class ProductController extends Controller
     public function cartList()
     {                                                           //First we can check using "return 'Hello';"
         $userId = Session::get('user')['id'];
-        $products = DB::table('cart')
-        ->join('products','cart.product_id','=','products.id')
-        ->where('cart.user_id',$userId)
-        ->select('products.*','cart.id as cart_id')                    // we need to select cart id also for removing product from cart by id in cartlist.blade.php.
-        ->get();
+        // $products = DB::table('cart')
+        // ->join('products','cart.product_id','=','products.id')
+        // ->where('cart.user_id',$userId)
+        // ->select('products.*','cart.id as cart_id')                    // we need to select cart id also for removing product from cart by id in cartlist.blade.php.
+        // ->get();
 
-        return view ('cartlist',['products'=>$products]);
+        $cartList = Cart::where('user_id',$userId)->get();
+        return view ('cartlist',['cartList'=>$cartList]);
     }
 
     public function removeCart($id)
     {
-        Cart::destroy($id);
+        Cart::find($id)->delete();
         return redirect('/cartlist');
     }
 
@@ -85,6 +86,8 @@ class ProductController extends Controller
          ->where('cart.user_id',$userId)
          ->sum('products.product_new_price');
  
+        // $total =$user->user()->carts()->product()->sum('product_new_price');
+        // $total = Cart::product()->where('user_id',$userId)->sum('product_new_price');
          return view('checkout',['total'=>$total,'user'=>$user]);
     }
 
@@ -113,18 +116,19 @@ class ProductController extends Controller
     public function myOrders()
     {
         $userId=Session::get('user')['id'];
-        $orders = DB::table('orders')
-         ->join('products','orders.product_id','=','products.id')
-         ->where('orders.user_id',$userId)
-         ->select('products.*','orders.*','orders.id as orders_id')
-         ->get();
- 
-         return view('myorders',['products'=>$orders]);
+        // $orders = DB::table('orders')
+        //  ->join('products','orders.product_id','=','products.id')
+        //  ->where('orders.user_id',$userId)
+        //  ->select('products.*','orders.*','orders.id as orders_id')
+        //  ->get();
+
+        $orders = Order::where('user_id',$userId)->get();
+        return view('myorders',['orders'=>$orders]);
     }
 
     public function removeOrder($id)
     {
-        Order::destroy($id);
+        Order::find($id)->delete();
         return redirect('/myorders');
     }
 

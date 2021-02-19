@@ -19,12 +19,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($products as $product)
+                            @foreach($cartList as $cart)
                             <tr>
-                                <td><img src="/assets/images/{{$product->product_image1}}" width="50"></td>
-                                <td>{{$product->product_name1}}</td>
-                                <td>₹ {{$product->product_new_price}}</td>
-                                <td><a href="/removecart/{{$product->cart_id}}" class="text danger lead" onclick="return confirm('Are you sure you want to remove this product?');"><i class="fa fa-trash"></i>&nbsp;&nbsp; Remove</td>
+                                <td><img src="/assets/images/{{$cart->product->product_image1}}" width="50"></td>       {{-- variable/fuction 'product' is created 'Cart' model by relationship setup --}}
+                                <td>{{$cart->product->product_name1}}</td>
+                                <td>₹ {{$cart->product->product_new_price}}</td>
+                                <td><a href="/removecart/{{$cart->id}}" class="text danger lead" onclick="return confirm('Are you sure you want to remove this product?');"><i class="fa fa-trash"></i>&nbsp;&nbsp; Remove</td>
                             </tr>
                             @endforeach
                             <tr>

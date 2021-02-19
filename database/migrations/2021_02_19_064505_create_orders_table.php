@@ -15,8 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
-            $table->integer('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');       //default constrained() means references 'id' on 'users' table. To customize table name type constrained('table_name'). onDelete('cascade') means if we delete a user then we want to delete that user's orders too.
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('payment_method');
             $table->string('address');
             $table->string('status');

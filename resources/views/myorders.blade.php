@@ -22,15 +22,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($products as $product)
+                            @foreach($orders as $order)
                             <tr>
-                                <td><img src="/assets/images/{{$product->product_image1}}" width="50"></td>
-                                <td>{{$product->product_name1}}</td>
-                                <td>₹ {{$product->product_new_price}}</td>
-                                <td>{{$product->status}}</td>
-                                <td>{{$product->address}}</td>
-                                <td>{{$product->payment_method}}</td>
-                                <td><a href="/removeorder/{{$product->orders_id}}" class="text danger lead" onclick="return confirm('Are you sure you want to cancel/return this product?');">Cancel/Return</td>
+                                <td><img src="/assets/images/{{$order->product->product_image1}}" width="50"></td>          {{-- variable/fuction 'product' is created 'Order' model by relationship setup --}}
+                                <td>{{$order->product->product_name1}}</td>
+                                <td>₹ {{$order->product->product_new_price}}</td>
+                                <td>{{$order->status}}</td>
+                                <td>{{$order->address}}</td>
+                                <td>{{$order->payment_method}}</td>
+                                <td><a href="/removeorder/{{$order->id}}" class="text danger lead" onclick="return confirm('Are you sure you want to cancel/return this product?');">Cancel/Return</td>
                             </tr>
                             @endforeach
                             <tr>
