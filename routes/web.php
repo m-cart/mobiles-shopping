@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,40 +19,33 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/','App\Http\Controllers\ProductController@home');
+Route::get('/',[ProductController::class, 'home']);
 
-Route::get('/login', function () {
-    return view('login');
-});
-Route::post('/login','App\Http\Controllers\UserController@login');
-Route::get('/signup', function () {  return view('signup');   });
-Route::post('/signup','App\Http\Controllers\UserController@signup');
+Route::get('/login',[UserController::class, 'loginView'])->name('login')->middleware('guest');
+Route::post('/login',[UserController::class, 'login'])->middleware('guest');
+Route::get('/signup', function () {  return view('signup');   })->middleware('guest');
+Route::post('/signup',[UserController::class, 'signup'])->middleware('guest');
 Route::get('/logout', function () {
-    Session::forget('user');                                    //To erase session 'user' from the browser
+    Auth::logout();
     return redirect('login');
 });
 
-Route::get('detail/{id}','App\Http\Controllers\ProductController@detail');
-Route::get('/search','App\Http\Controllers\ProductController@search');
-Route::post('/add_to_cart','App\Http\Controllers\ProductController@addToCart');
-Route::get('/cartlist','App\Http\Controllers\ProductController@cartList');
-Route::get('/removecart/{id}','App\Http\Controllers\ProductController@removeCart');
-Route::get('/checkout','App\Http\Controllers\ProductController@checkout');
-Route::post('/placeorder','App\Http\Controllers\ProductController@placeOrder');
-Route::get('/myorders','App\Http\Controllers\ProductController@myOrders');
-Route::get('/removeorder/{id}','App\Http\Controllers\ProductController@removeOrder');
+Route::get('detail/{id}',[ProductController::class, 'detail']);
+Route::get('/search',[ProductController::class, 'search']);
+Route::post('/add_to_cart',[ProductController::class, 'addToCart'])->middleware('auth');
+Route::get('/cartlist',[ProductController::class, 'cartList'])->middleware('auth');
+Route::get('/removecart/{id}',[ProductController::class, 'removeCart'])->middleware('auth');
+Route::get('/checkout',[ProductController::class, 'checkout'])->middleware('auth');
+Route::post('/placeorder',[ProductController::class, 'placeOrder'])->middleware('auth');
+Route::get('/myorders',[ProductController::class, 'myOrders'])->middleware('auth');
+Route::get('/removeorder/{id}',[ProductController::class, 'removeOrder'])->middleware('auth');
 Route::get('/contact', function () {  return view('contact');   });
 
 //Admin
-Route::get('/admin','App\Http\Controllers\ProductController@adminHome');
-Route::get('/edit/{id}','App\Http\Controllers\ProductController@editProduct');
-Route::put('/update/{id}','App\Http\Controllers\ProductController@updateProduct');
-Route::get('/customerorders','App\Http\Controllers\ProductController@customerOrders');
-Route::get('/placed/{id}','App\Http\Controllers\ProductController@placed');
-Route::get('/shipped/{id}','App\Http\Controllers\ProductController@shipped');
-Route::get('/delivered/{id}','App\Http\Controllers\ProductController@delivered');
-
-Route::get('/adminlogout', function () {
-    Session::forget('admin');
-    return redirect('login');
-});
+Route::get('/admin',[ProductController::class, 'adminHome'])->middleware('auth');
+Route::get('/edit/{id}',[ProductController::class, 'editProduct'])->middleware('auth');
+Route::put('/update/{id}',[ProductController::class, 'updateProduct'])->middleware('auth');
+Route::get('/customerorders',[ProductController::class, 'customerOrders'])->middleware('auth');
+Route::get('/placed/{id}',[ProductController::class, 'placed'])->middleware('auth');
+Route::get('/shipped/{id}',[ProductController::class, 'shipped'])->middleware('auth');
+Route::get('/delivered/{id}',[ProductController::class, 'delivered'])->middleware('auth');

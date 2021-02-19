@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
-use Session;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Order; 
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -35,32 +35,22 @@ class ProductController extends Controller
 
     public function addToCart(Request $req)
     {
-        if($req->session()->has('user'))
-        {
             $cart = new Cart;
-            $cart->user_id = $req->session()->get('user')['id'];          //to get id from the session user
+            $cart->user_id = Auth::id();
             $cart->product_id = $req->product_id;
             $cart ->save();
             return redirect ('/');
-        }
-        else
-        {
-            return '<script>
-                    alert("Please login to your account"); 
-                    window.location.href="/login";
-                </script>';
-        }
     }
 
     public static function cartItem()                                   //here static func is using because. in header.blade file we are assigning $total = ProductController::cartItem(); and statically printing $total for count(). This is possible only by static function.
     {
-        $userId = Session::get('user')['id'];
+        $userId = Auth::id();
         return Cart::where('user_id',$userId)->count();
     }
     
     public function cartList()
     {                                                           //First we can check using "return 'Hello';"
-        $userId = Session::get('user')['id'];
+        $userId = Auth::id();
         // $products = DB::table('cart')
         // ->join('products','cart.product_id','=','products.id')
         // ->where('cart.user_id',$userId)
@@ -79,7 +69,7 @@ class ProductController extends Controller
 
     public function checkout()
     {
-        $userId = Session::get('user')['id'];
+        $userId = Auth::id();
         $user = User::find($userId);
         $total = DB::table('cart')
          ->join('products','cart.product_id','=','products.id')
@@ -93,7 +83,7 @@ class ProductController extends Controller
 
     public function placeOrder(Request $req)
     {
-        $userId = Session::get('user')['id'];
+        $userId = Auth::id();
         $allCart = Cart::where('user_id',$userId)->get();
         foreach($allCart as $cart)
         {
@@ -115,7 +105,7 @@ class ProductController extends Controller
 
     public function myOrders()
     {
-        $userId=Session::get('user')['id'];
+        $userId=Auth::id();
         // $orders = DB::table('orders')
         //  ->join('products','orders.product_id','=','products.id')
         //  ->where('orders.user_id',$userId)
@@ -135,25 +125,16 @@ class ProductController extends Controller
     //Admin
     public function adminHome()
     {
-        if(!session()->has('admin')){
-            abort(404);  
-        }
         $products = Product::all();
         return view('admin/home',['products'=>$products]);
     }
     public function editProduct($id)
     {
-        if(!session()->has('admin')){
-            abort(404);  
-        }
         $product = Product::find($id);
         return view('admin/editproduct',['product'=>$product]);
     }
     public function updateProduct(Request $req, $id)
     {
-        if(!session()->has('admin')){
-            abort(404);  
-        }
         $this->validate($req, [
             'product_name1' => 'required|min:4',
             'product_old_price' => 'required|numeric|min:4000|max:100000',
@@ -201,17 +182,11 @@ class ProductController extends Controller
     }
     public function customerOrders()
     {
-        if(!session()->has('admin')){
-            abort(404);  
-        }
         $orders = Order::all();
         return view('admin/customerorders',['orders'=>$orders]);
     }
     public function placed($id)
     {
-        if(!session()->has('admin')){
-            abort(404);  
-        }
         $order = Order::find($id);
         $order->status = "Placed";
         $order->save();
@@ -219,9 +194,6 @@ class ProductController extends Controller
     }
     public function shipped($id)
     {
-        if(!session()->has('admin')){
-            abort(404);  
-        }
         $order = Order::find($id);
         $order->status = "Shipped";
         $order->save();
@@ -229,9 +201,6 @@ class ProductController extends Controller
     }
     public function delivered($id)
     {
-        if(!session()->has('admin')){
-            abort(404);  
-        }
         $order = Order::find($id);
         $order->status = "Delivered";
         $order->save();

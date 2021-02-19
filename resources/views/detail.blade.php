@@ -44,21 +44,18 @@
 					<div class="eco-buttons mt-5">
 
 						<div class="transmitv single-item">
-                            @if(Session::has('user'))
 							<form action="/add_to_cart" class="form-submit" method="POST">
 								@csrf
 								<input type="hidden" name="product_id" value="{{$product->id}}">
+								<button type="submit" class="transmitv-cart ptransmitv-cart add-to-cart read-2 addItemBtn">
+									Add to Cart
+								</button>
+							</form>
+							{{-- <form action="#" class="form-submit">
                                 <button type="submit" class="transmitv-cart ptransmitv-cart add-to-cart read-2 addItemBtn">
                                     Add to Cart
                                 </button>
-                            </form>
-							@else
-							<form action="#" class="form-submit">
-                                <button type="submit" class="transmitv-cart ptransmitv-cart add-to-cart read-2 addItemBtn">
-                                    Add to Cart
-                                </button>
-                            </form>
-                            @endif
+                            </form> --}}
 						</div>
 						<div class="buyhny-now"> <a href="#" class="action btn">Buy Now </a></div>
 					</div>

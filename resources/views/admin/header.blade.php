@@ -1,11 +1,3 @@
-<?php
-  use App\Http\Controllers\ProductController;
-  $total = 0;
-  if(Session::has('user'))
-  {
-    $total = ProductController::cartItem();
-  }
-?>
 <section class="w3l-banner-slider-main">
 	<div class="top-header-content">
 		<header class="tophny-header">
@@ -71,7 +63,7 @@
 								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href=""><span class="fa fa-user" style="font-size:24px" aria-hidden="true"></span>&nbsp;&nbsp;Hi Admin</a>
 								<div class="dropdown-menu bg-secondary">
 									<a class="dropdown-item" href="#">My Account</a>
-									<a class="dropdown-item" href="/adminlogout">Logout</a>
+									<a class="dropdown-item" href="/logout">Logout</a>
 								</div>
 							</li>
 						</ul>

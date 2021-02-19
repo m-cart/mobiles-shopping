@@ -3,7 +3,7 @@
 
   $total = 0;
 //   $username = Session::get('user')['name'];
-  if(Session::has('user'))
+  if(Auth::user())
   {
     $total = ProductController::cartItem();
   }
@@ -73,27 +73,29 @@
 								<a class="nav-link" href="/contact">Contact</a>
 							</li>
 							<li class="nav-item">
-								@if(Session::has('user'))
-								<a class="nav-link" href="/cartlist"><i class="fa fa-shopping-cart"> <span class="badge badge-danger">({{$total}})</span></i></a>
-								@else
-								<a class="nav-link" onclick="return confirm('Please login to your account');" href="/login"><i class="fa fa-shopping-cart"> <span class="badge badge-danger">({{$total}})</span></i></a>
-								@endif
+								@auth
+									<a class="nav-link" href="/cartlist"><i class="fa fa-shopping-cart"> <span class="badge badge-danger">({{$total}})</span></i></a>
+								@endauth
+								@guest
+									<a class="nav-link" onclick="return confirm('Please login to your account');" href="/login"><i class="fa fa-shopping-cart"> <span class="badge badge-danger">({{$total}})</span></i></a>
+								@endguest
 							</li>
-							@if(Session::has('user'))
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href=""><span class="fa fa-user" style="font-size:24px" aria-hidden="true"></span>&nbsp;&nbsp;Hi {{Session::get('user')['name']}}</a>
-								<div class="dropdown-menu bg-secondary">
-									<a class="dropdown-item" href="#">Account</a>
-									<a class="dropdown-item" href="/cartlist">Cart <span class="badge badge-danger cart-item"></span></a>
-									<a class="dropdown-item" href="/myorders">Orders</a>
-									<a class="dropdown-item" href="/logout">Logout</a>
-								</div>
-							</li>
-  							@else
-							<li class="nav-item">
-								<a class="nav-link" href="/login"><span class="fa fa-user" style="font-size:26px" aria-hidden="true"></span> &nbsp;&nbsp;Login</a>
-							</li>
-							@endif
+							@auth
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href=""><span class="fa fa-user" style="font-size:24px" aria-hidden="true"></span>&nbsp;&nbsp;Hi {{ Auth::user()->name }}</a>
+									<div class="dropdown-menu bg-secondary">
+										<a class="dropdown-item" href="#">Account</a>
+										<a class="dropdown-item" href="/cartlist">Cart <span class="badge badge-danger cart-item"></span></a>
+										<a class="dropdown-item" href="/myorders">Orders</a>
+										<a class="dropdown-item" href="/logout">Logout</a>
+									</div>
+								</li>
+  							@endauth
+							@guest
+								<li class="nav-item">
+									<a class="nav-link" href="/login"><span class="fa fa-user" style="font-size:26px" aria-hidden="true"></span> &nbsp;&nbsp;Login</a>
+								</li>
+							@endguest
 						</ul>
 					</div>
 				</div>
