@@ -59,12 +59,12 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/paid/{id}',[ProductController::class, 'paid']);
 });
 
+//Stripe Payment Gateway
 Route::middleware(['auth'])->group(function () {
-    //Stripe Payment Gateway
     Route::get('stripe/{price}', [StripeController::class, 'stripe']);
     Route::post('stripe/{price}', [StripeController::class, 'stripePost'])->name('stripe.post');
-
-    //Facebook_login
-    Route::get('facebook', [FacebookController::class, 'redirectToFacebook']);
-    Route::get('facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
 });
+
+//Facebook_login
+Route::get('facebook', [FacebookController::class, 'redirectToFacebook']);
+Route::get('facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
