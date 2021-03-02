@@ -34,21 +34,21 @@
 							</a> -->
 					<!--/search-right-->
 					<div class="search-right">
-						<a href="#search" title="search"><span class="fa fa-search mr-2" aria-hidden="true"></span>
-							<span class="search-text">Search here</span></a>
-						<!-- search popup -->
-						<div id="search" class="pop-overlay">
-							<div class="popup">
-								<form action="/search" class="search-box">
-									<input type="search" placeholder="Keyword" name="query" required="required"
-										autofocus="">
-									<button type="submit" class="btn">Search</button>
-								</form>
-							</div>
-							<a class="close" href="#">×</a>
+					<a href="#search" title="search"><span class="fa fa-search mr-2" aria-hidden="true"></span>
+						<span class="search-text">Search here</span></a>
+					<!-- search popup -->
+					<div id="search" class="pop-overlay">
+						<div class="popup">
+							<form action="/search" class="search-box">
+								<input type="search" placeholder="Keyword" name="query" required="required"
+									autofocus="">
+								<button type="submit" class="btn">Search</button>
+							</form>
 						</div>
-						<!-- /search popup -->
+						<a class="close" href="#">×</a>
 					</div>
+					<!-- /search popup -->
+				</div>
 					<!--//search-right-->
 					<button class="navbar-toggler" type="button" data-toggle="collapse"
 						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -77,7 +77,7 @@
 									<a class="nav-link" href="/cartlist"><i class="fa fa-shopping-cart"> <span class="badge badge-danger">({{$total}})</span></i></a>
 								@endauth
 								@guest
-									<a class="nav-link" onclick="return confirm('Please login to your account');" href="/login"><i class="fa fa-shopping-cart"> <span class="badge badge-danger">({{$total}})</span></i></a>
+									<a class="nav-link" onclick="return confirm('Please login to your account');" href="/login"><i class="fa fa-shopping-cart"></i></a>
 								@endguest
 							</li>
 							@auth

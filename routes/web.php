@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\FacebookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +23,12 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/',[ProductController::class, 'home']);
 
-Route::get('/login',[UserController::class, 'loginView'])->name('login')->middleware('guest');
-Route::post('/login',[UserController::class, 'login'])->middleware('guest');
-Route::get('/signup', function () {  return view('signup');   })->middleware('guest');
-Route::post('/signup',[UserController::class, 'signup'])->middleware('guest');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login',[UserController::class, 'loginView'])->name('login');
+    Route::post('/login',[UserController::class, 'login']);
+    Route::get('/signup', function () {  return view('signup');   });
+    Route::post('/signup',[UserController::class, 'signup']);
+});
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('login');
@@ -32,20 +36,35 @@ Route::get('/logout', function () {
 
 Route::get('detail/{id}',[ProductController::class, 'detail']);
 Route::get('/search',[ProductController::class, 'search']);
-Route::post('/add_to_cart',[ProductController::class, 'addToCart'])->middleware('auth');
-Route::get('/cartlist',[ProductController::class, 'cartList'])->middleware('auth');
-Route::get('/removecart/{id}',[ProductController::class, 'removeCart'])->middleware('auth');
-Route::get('/checkout',[ProductController::class, 'checkout'])->middleware('auth');
-Route::post('/placeorder',[ProductController::class, 'placeOrder'])->middleware('auth');
-Route::get('/myorders',[ProductController::class, 'myOrders'])->middleware('auth');
-Route::get('/removeorder/{id}',[ProductController::class, 'removeOrder'])->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/add_to_cart',[ProductController::class, 'addToCart']);
+    Route::get('/cartlist',[ProductController::class, 'cartList']);
+    Route::get('/removecart/{id}',[ProductController::class, 'removeCart']);
+    Route::get('/checkout',[ProductController::class, 'checkout']);
+    Route::post('/placeorder',[ProductController::class, 'placeOrder']);
+    Route::get('/myorders',[ProductController::class, 'myOrders']);
+    Route::get('/removeorder/{id}',[ProductController::class, 'removeOrder']);
+});
 Route::get('/contact', function () {  return view('contact');   });
 
 //Admin
-Route::get('/admin',[ProductController::class, 'adminHome'])->middleware('auth');
-Route::get('/edit/{id}',[ProductController::class, 'editProduct'])->middleware('auth');
-Route::put('/update/{id}',[ProductController::class, 'updateProduct'])->middleware('auth');
-Route::get('/customerorders',[ProductController::class, 'customerOrders'])->middleware('auth');
-Route::get('/placed/{id}',[ProductController::class, 'placed'])->middleware('auth');
-Route::get('/shipped/{id}',[ProductController::class, 'shipped'])->middleware('auth');
-Route::get('/delivered/{id}',[ProductController::class, 'delivered'])->middleware('auth');
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin',[ProductController::class, 'adminHome']);
+    Route::get('/edit/{id}',[ProductController::class, 'editProduct']);
+    Route::put('/update/{id}',[ProductController::class, 'updateProduct']);
+    Route::get('/customerorders',[ProductController::class, 'customerOrders']);
+    Route::get('/placed/{id}',[ProductController::class, 'placed']);
+    Route::get('/shipped/{id}',[ProductController::class, 'shipped']);
+    Route::get('/delivered/{id}',[ProductController::class, 'delivered']);
+    Route::get('/paid/{id}',[ProductController::class, 'paid']);
+});
+
+Route::middleware(['auth'])->group(function () {
+    //Stripe Payment Gateway
+    Route::get('stripe/{price}', [StripeController::class, 'stripe']);
+    Route::post('stripe/{price}', [StripeController::class, 'stripePost'])->name('stripe.post');
+
+    //Facebook_login
+    Route::get('facebook', [FacebookController::class, 'redirectToFacebook']);
+    Route::get('facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
+});

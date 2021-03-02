@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Order; 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderPlaced;
 
 class ProductController extends Controller
 {
@@ -78,7 +80,8 @@ class ProductController extends Controller
  
         // $total =$user->user()->carts()->product()->sum('product_new_price');
         // $total = Cart::product()->where('user_id',$userId)->sum('product_new_price');
-         return view('checkout',['total'=>$total,'user'=>$user]);
+        // $total = Auth::user()->product()->sum('product_new_price');
+        return view('checkout',['total'=>$total,'user'=>$user]);
     }
 
     public function placeOrder(Request $req)
@@ -93,10 +96,12 @@ class ProductController extends Controller
             $order->payment_method=$req->payment;
             $order->address=$req->address;
             $order->status="Pending";
+            $order->payment_status="Pending";
             $order->save();
             Cart::where('user_id',$userId)->delete(); 
         }
-        $req->input();
+        $user = Auth::user();
+        Mail::to($user)->send(new OrderPlaced());
         return '<script>
                     alert("Your orders has been successfully placed. Please click My Orders to track your orders.");
                     window.location.href="/";
@@ -203,6 +208,13 @@ class ProductController extends Controller
     {
         $order = Order::find($id);
         $order->status = "Delivered";
+        $order->save();
+        return redirect ('customerorders');
+    }
+    public function paid($id)
+    {
+        $order = Order::find($id);
+        $order->payment_status = "Paid";
         $order->save();
         return redirect ('customerorders');
     }

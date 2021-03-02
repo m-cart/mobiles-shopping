@@ -7,7 +7,7 @@
                 <tbody>
                 <tr>
                     <td colspan="2">
-                        <h3 class="text-center text-info ">Place your order!</h3>
+                        <h3 class="text-center text-info display-4"><b>Place Your Order!</b></h3>
                     </td>
                 </tr>
                 <tr>
@@ -16,11 +16,11 @@
                 </tr>
                 <tr>
                     <td>Delivery Charge:</td>
-                    <td>₹ 50</td>
+                    <td><del>₹ 50</del></td>
                 </tr>
                 <tr>
                     <td>Total Amount</td>
-                    <td>₹ {{$total+50}}</td>
+                    <td>₹ {{$total}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -32,10 +32,10 @@
             </div>
             <div class="form-group">
                 <label for="pay">Payment Method:</label>  <br>
-                <input type="radio" value="UPI" name="payment"> <span>UPI</span> <br> <br>
-                <input type="radio" value="Debit Card" name="payment"> <span>Debit Card</span> <br> <br>
-                <input type="radio" value="EMI" name="payment"> <span>EMI Payment</span> <br><br>
                 <input type="radio" value="Cash on Delivery" name="payment" checked> <span>Cash on Delivery</span> <br> <br>
+                <input type="radio" value="Debit Card" name="payment" disabled> <span>Debit Card</span> <br> <br>
+                <input type="radio" value="UPI" name="payment" disabled> <span>UPI</span> <br> <br>
+                <input type="radio" value="EMI" name="payment" disabled> <span>EMI Payment</span> <br><br>
             </div>
             <button type="submit" class="btn btn-success">Place Order</button>
         </form>

@@ -2,20 +2,22 @@
 @section("content")
 <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 <div class="table-responsive mt-2">
                     <table class="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
                                 <td colspan="4">
-                                    <h4 class="text-center text-info">Customer's Orders</h4>
+                                    <h3 class="text-center text-info display-4"><b>Customer's Orders!</b></h3>
                                 </td>
                             </tr>
                             <tr>
-                                <th>Product ID</th>
-                                <th>User ID</th>
-                                
+                                <th>User Name</th>
+                                <th>Product Name</th>
+                                <th>Product Image</th>
+                                <th>Product Price</th>
                                 <th>Payment Method</th>
+                                <th>Payment Status</th>
                                 <th>Address</th>
                                 <th>Status</th>
                             </tr>
@@ -23,10 +25,24 @@
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
-                                <td>{{$order->product_id}}</td>
-                                <td>{{$order->user_id}}</td>
-                                
+                                <td>{{$order->user->name}}</td>
+                                <td>{{$order->product->product_name1}}</td>
+                                <td><img src="/assets/images/{{$order->product->product_image1}}" width="50"></td>
+                                <td>₹ {{$order->product->product_new_price}}</td>
                                 <td>{{$order->payment_method}}</td>
+                                <td>@if($order->payment_status=='Pending')
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            {{$order->payment_status}}
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="/paid/{{$order->id}}">Paid</a>
+                                        </div>
+                                    </div>
+                                    @else
+                                        {{$order->payment_status}}
+                                    @endif
+                                </td>
                                 <td>{{$order->address}}</td>
                                 <td>@if($order->status=='Pending'||$order->status=='Placed'||$order->status=='Shipped')
                                     <div class="dropdown">

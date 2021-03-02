@@ -8,7 +8,7 @@
                         <thead>
                             <tr>
                                 <td colspan="4">
-                                    <h4 class="text-center text-info m-0">Products in your cart!</h4>
+                                    <h3 class="text-center text-info display-4"><b>My Cart!</b></h3>
                                 </td>
                             </tr>
                             <tr>
