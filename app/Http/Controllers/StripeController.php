@@ -32,4 +32,5 @@ class StripeController extends Controller
         //return back();
         return redirect('/myorders');
     }
+
 }

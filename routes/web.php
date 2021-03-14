@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/placeorder',[ProductController::class, 'placeOrder']);
     Route::get('/myorders',[ProductController::class, 'myOrders']);
     Route::get('/removeorder/{id}',[ProductController::class, 'removeOrder']);
+    Route::get('/order/pdf/{id}',[ProductController::class, 'exportPDF']);
 });
 Route::get('/contact', function () {  return view('contact');   });
 

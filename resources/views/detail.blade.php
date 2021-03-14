@@ -30,14 +30,14 @@
 								<div class="thumb-image"> <img src="/assets/images/{{$product->product_image2}}" data-imagezoom="true"
 										class="img-fluid" alt=" "> </div>
 							</li>
-							<!-- <li data-thumb="/assets/images/single/{{$product->product_image_single3}}">
-								<div class="thumb-image"> <img src="/assets/images/single/{{$product->product_image_single3}}" data-imagezoom="true"
+							<li data-thumb="/assets/images/{{$product->product_image1}}">
+								<div class="thumb-image"> <img src="/assets/images/{{$product->product_image1}}" data-imagezoom="true"
 										class="img-fluid" alt=" "> </div>
 							</li>
-							<li data-thumb="/assets/images/single/{{$product->product_image_single4}}">
-								<div class="thumb-image"> <img src="/assets/images/single/{{$product->product_image_single4}}" data-imagezoom="true"
+							<li data-thumb="/assets/images/{{$product->product_image2}}">
+								<div class="thumb-image"> <img src="/assets/images/{{$product->product_image2}}" data-imagezoom="true"
 										class="img-fluid" alt=" "> </div>
-							</li> -->
+							</li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -61,7 +61,7 @@
 					</div>
 				</div>
 				<div class="col-lg-7 single-right-left pl-lg-4">
-					<h3>{{$product->product_name_single}}</h3>
+					<h3>{{$product->product_name2}}</h3>
 					<div class="caption">
 						<ul class="rating-single">
 							<li>

@@ -34,7 +34,10 @@
                                 <td><img src="/assets/images/{{$order->product->product_image1}}" width="50"></td>          {{-- variable/fuction 'product' is created 'Order' model by relationship setup --}}
                                 <td>{{$order->product->product_name1}}</td>
                                 <td>₹ {{$order->product->product_new_price}}</td>
-                                <td>{{$order->status}}</td>
+                                <td><p>{{$order->status}}</p>
+                                @if ($order->status=="Delivered")
+                                    <a href="{{ URL::to('/order/pdf/'.$order->id ) }}" class="">Download Invoice</a>  
+                                @endif</td>
                                 <td>{{$order->address}}</td>
                                 <td>{{$order->payment_method}}</td>
                                 <td>   @if ( $order->payment_status =="Pending")

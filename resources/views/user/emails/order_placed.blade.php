@@ -1,7 +1,7 @@
 @component('mail::message')
 # Your Order Has Been Placed.
 
-Hello User,<br>
+Hello Customer,<br>
 Thank you for your order. Your order has been placed. Your order will be delivered  within 2 days.
 
 @component('mail::button', ['url' => ''])

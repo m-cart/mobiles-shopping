@@ -11,6 +11,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPlaced;
+use PDF;
 
 class ProductController extends Controller
 {
@@ -125,6 +126,18 @@ class ProductController extends Controller
     {
         Order::find($id)->delete();
         return redirect('/myorders');
+    }
+
+    public function exportPDF($id) 
+    {
+        $order = Order::find($id);
+        
+        // share data to view
+        view()->share('order',$order);
+        $pdf = PDF::loadView('pdf_view', $order);
+  
+        // download PDF file with download method
+        return $pdf->download('order_'.$order->product->product_name1.'_'.$order->user->name.'.pdf');
     }
 
     //Admin
