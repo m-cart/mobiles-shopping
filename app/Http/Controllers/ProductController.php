@@ -88,6 +88,11 @@ class ProductController extends Controller
     public function placeOrder(Request $req)
     {
         $userId = Auth::id();
+        $user = Auth::user();
+        $total = DB::table('cart')
+         ->join('products','cart.product_id','=','products.id')
+         ->where('cart.user_id',$userId)
+         ->sum('products.product_new_price');
         $allCart = Cart::where('user_id',$userId)->get();
         foreach($allCart as $cart)
         {
@@ -101,12 +106,18 @@ class ProductController extends Controller
             $order->save();
             Cart::where('user_id',$userId)->delete(); 
         }
-        $user = Auth::user();
-        Mail::to($user)->send(new OrderPlaced());
-        return '<script>
-                    alert("Your orders has been successfully placed. Please click My Orders to track your orders.");
-                    window.location.href="/";
-                </script>';
+        if($req->payment=='Debit Card')
+        {
+            Mail::to($user)->send(new OrderPlaced());
+            return redirect()->route('stripe', ['price' => $total]);
+        }
+        else if($req->payment=='Cash on Delivery') {
+            Mail::to($user)->send(new OrderPlaced());
+            return '<script>
+                        alert("Your orders has been successfully placed. Please click My Orders to track your orders.");
+                        window.location.href="/";
+                    </script>';
+        }
     }
 
     public function myOrders()
@@ -118,7 +129,7 @@ class ProductController extends Controller
         //  ->select('products.*','orders.*','orders.id as orders_id')
         //  ->get();
 
-        $orders = Order::where('user_id',$userId)->get();
+        $orders = Order::where('user_id',$userId)->latest()->get();
         return view('myorders',['orders'=>$orders]);
     }
 

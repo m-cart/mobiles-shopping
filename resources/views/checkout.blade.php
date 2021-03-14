@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label for="pay">Payment Method:</label>  <br>
                 <input type="radio" value="Cash on Delivery" name="payment" checked> <span>Cash on Delivery</span> <br> <br>
-                <input type="radio" value="Debit Card" name="payment" disabled id="" data-toggle="modal" data-target="#myModal"> <span>Debit Card</span> <br> <br>
+                <input type="radio" value="Debit Card" name="payment" id=""> <span>Debit Card</span> <br> <br>
                 <input type="radio" value="UPI" name="payment" disabled> <span>UPI</span> <br> <br>
                 <input type="radio" value="EMI" name="payment" disabled> <span>EMI Payment</span> <br><br>
             </div>
@@ -129,38 +129,5 @@
       </div>
     </div>
 </div> --}}
-
-{{-- <script type="text/javascript">
-    $(document).ready(function() {
-        $(".btn-submit").click(function(e){
-            e.preventDefault();
-
-            var _token = $("input[name='_token']").val();
-            var email = $("#email").val();
-            var pswd = $("#pwd").val();
-            var address = $("#address").val();
-
-            $.ajax({
-                url: "{{ route('ajax.request.store') }}",
-                type:'POST',
-                data: {_token:_token, email:email, pswd:pswd,address:address},
-                success: function(data) {
-                  printMsg(data);
-                }
-            });
-        }); 
-
-        function printMsg (msg) {
-          if($.isEmptyObject(msg.error)){
-              console.log(msg.success);
-              $('.alert-block').css('display','block').append('<strong>'+msg.success+'</strong>');
-          }else{
-            $.each( msg.error, function( key, value ) {
-              $('.'+key+'_err').text(value);
-            });
-          }
-        }
-    });
-</script> --}}
 
 @endsection

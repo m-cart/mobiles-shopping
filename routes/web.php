@@ -62,7 +62,7 @@ Route::middleware(['admin'])->group(function () {
 
 //Stripe Payment Gateway
 Route::middleware(['auth'])->group(function () {
-    Route::get('stripe/{price}', [StripeController::class, 'stripe']);
+    Route::get('stripe/{price}', [StripeController::class, 'stripe'])->name('stripe');
     Route::post('stripe/{price}', [StripeController::class, 'stripePost'])->name('stripe.post');
 });
 
