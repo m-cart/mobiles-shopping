@@ -29,7 +29,27 @@
                                 <td>{{$order->product->product_name1}}</td>
                                 <td><img src="/assets/images/{{$order->product->product_image1}}" width="50"></td>
                                 <td>₹ {{$order->product->product_new_price}}</td>
-                                <td>{{$order->payment_method}}</td>
+                                <td>@if($order->payment_method=='Cash on Delivery')
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                {{$order->payment_method}}
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="/debit/{{$order->id}}">Debit Card</a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($order->payment_method=='Debit Card')
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                {{$order->payment_method}}
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="/cod/{{$order->id}}">Cash on Delivery</a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </td>
                                 <td>@if($order->payment_status=='Pending')
                                     <div class="dropdown">
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">

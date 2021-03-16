@@ -4,7 +4,9 @@
 	<!-- /products-->
 	<div class="ecom-contenthny py-5">
 		<div class="container py-lg-5">
-			
+			<div class="">
+				<a class="btn btn-success" href="">Add New Smartphone</a>
+			</div>
 			<h3 class="hny-title mb-0 text-center" id="latest">List of all Smartphones</h3>
 			<!-- /row-->
 			<div class="ecom-products-grids row mt-lg-5 mt-3">
@@ -35,6 +37,7 @@
 					</div>
 				</div>
 				@endforeach
+				{{ $products->links('pagination::bootstrap-4') }}
 			</div>
 			<!-- //row-->
 		</div>

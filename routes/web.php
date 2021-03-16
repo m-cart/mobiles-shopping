@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\CustomerOrderController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\FacebookController;
 
@@ -24,14 +26,10 @@ use App\Http\Controllers\FacebookController;
 Route::get('/',[ProductController::class, 'home']);
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/login',[UserController::class, 'loginView'])->name('login');
+    Route::get('/login', function () {  return view('auth.login');   })->name('login');
     Route::post('/login',[UserController::class, 'login']);
-    Route::get('/signup', function () {  return view('signup');   });
+    Route::get('/signup', function () {  return view('auth.signup');   })->name('signup');
     Route::post('/signup',[UserController::class, 'signup']);
-});
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('login');
 });
 
 Route::get('detail/{id}',[ProductController::class, 'detail']);
@@ -45,19 +43,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/myorders',[ProductController::class, 'myOrders']);
     Route::get('/removeorder/{id}',[ProductController::class, 'removeOrder']);
     Route::get('/order/pdf/{id}',[ProductController::class, 'exportPDF']);
+    Route::get('/logout', function () {     Auth::logout();     return redirect('login');   });
 });
 Route::get('/contact', function () {  return view('contact');   });
 
 //Admin
 Route::middleware(['admin'])->group(function () {
-    Route::get('/admin',[ProductController::class, 'adminHome']);
-    Route::get('/edit/{id}',[ProductController::class, 'editProduct']);
-    Route::put('/update/{id}',[ProductController::class, 'updateProduct']);
-    Route::get('/customerorders',[ProductController::class, 'customerOrders']);
-    Route::get('/placed/{id}',[ProductController::class, 'placed']);
-    Route::get('/shipped/{id}',[ProductController::class, 'shipped']);
-    Route::get('/delivered/{id}',[ProductController::class, 'delivered']);
-    Route::get('/paid/{id}',[ProductController::class, 'paid']);
+    Route::get('/admin',[AdminProductController::class, 'adminHome']);
+    Route::get('/edit/{id}',[AdminProductController::class, 'editProduct']);
+    Route::put('/update/{id}',[AdminProductController::class, 'updateProduct']);
+    Route::get('/customerorders',[CustomerOrderController::class, 'customerOrders']);
+    Route::get('/placed/{id}',[CustomerOrderController::class, 'placed']);
+    Route::get('/shipped/{id}',[CustomerOrderController::class, 'shipped']);
+    Route::get('/delivered/{id}',[CustomerOrderController::class, 'delivered']);
+    Route::get('/paid/{id}',[CustomerOrderController::class, 'paid']);
+    Route::get('/debit/{id}',[CustomerOrderController::class, 'debitMethod']);
+    Route::get('/cod/{id}',[CustomerOrderController::class, 'codMethod']);
 });
 
 //Stripe Payment Gateway

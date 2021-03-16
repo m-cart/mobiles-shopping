@@ -26,11 +26,6 @@ class UserController extends Controller
                 </script>';
     }
 
-    public function loginView()
-    {
-        return view('login');
-    }
-
     public function login(Request $req)
     {
         $this->validate($req, [
