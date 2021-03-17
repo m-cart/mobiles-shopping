@@ -5,7 +5,7 @@
 	<div class="ecom-contenthny py-5">
 		<div class="container py-lg-5">
 			<div class="">
-				<a class="btn btn-success" href="">Add New Smartphone</a>
+				<a class="btn btn-success" href="{{ route('product.add') }}">Add New Smartphone</a>
 			</div>
 			<h3 class="hny-title mb-0 text-center" id="latest">List of all Smartphones</h3>
 			<!-- /row-->
@@ -19,9 +19,8 @@
 								<img class="pic-2 img-fluid" src="/assets/images/{{$product->product_image2}}" alt="mobile">
 							</a>
 							<ul class="social">
-									<li><a href="/detail/{{$product['id']}}" data-tip="Quick View"><span class="fa fa-eye"></span></a></li>
-									<li><a href="#" data-tip="Add to Cart"><span class="fa fa-shopping-bag"></span></a>
-									</li>
+								<li><a href="/detail/{{$product->id}}" data-tip="Quick View"><span class="fa fa-eye"></span></a></li>	
+								<li><a href="/remove/{{$product->id}}" data-tip="Add to Cart"><span class="fa fa-trash"></span></a></li>
 							</ul>
 							<div class="transmitv single-item">
 									<input type="hidden" name="product_id" value="{{$product['id']}}">

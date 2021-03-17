@@ -50,8 +50,11 @@ Route::get('/contact', function () {  return view('contact');   });
 //Admin
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin',[AdminProductController::class, 'adminHome']);
+    Route::get('/add', function () {  return view('admin.addproduct');   })->name('product.add');
+    Route::post('/add',[AdminProductController::class, 'addProduct']);
     Route::get('/edit/{id}',[AdminProductController::class, 'editProduct']);
     Route::put('/update/{id}',[AdminProductController::class, 'updateProduct']);
+    Route::get('/remove/{id}',[AdminProductController::class, 'removeProduct']);
     Route::get('/customerorders',[CustomerOrderController::class, 'customerOrders']);
     Route::get('/placed/{id}',[CustomerOrderController::class, 'placed']);
     Route::get('/shipped/{id}',[CustomerOrderController::class, 'shipped']);
