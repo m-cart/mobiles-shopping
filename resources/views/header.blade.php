@@ -84,7 +84,7 @@
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href=""><span class="fa fa-user" style="font-size:24px" aria-hidden="true"></span>&nbsp;&nbsp;Hi {{ Auth::user()->name }}</a>
 									<div class="dropdown-menu bg-secondary">
-										<a class="dropdown-item" href="#">Account</a>
+										<a class="dropdown-item" href="/account">Account</a>
 										<a class="dropdown-item" href="/cartlist">Cart <span class="badge badge-danger cart-item"></span></a>
 										<a class="dropdown-item" href="/myorders">Orders</a>
 										<a class="dropdown-item" href="/logout">Logout</a>

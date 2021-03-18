@@ -12,6 +12,13 @@ class UserController extends Controller
 {
     public function signup(Request $req)
     {
+        $this->validate($req, [
+            'name' => 'required',
+            'mobile_number' => 'required|numeric',
+            'email' => 'required|email|max:255|unique:users',
+            'address' => 'required',
+            'password' => 'required',
+        ]);
         //return $req->input();
         $user = new User;
         $user->name = $req->name;
@@ -47,7 +54,28 @@ class UserController extends Controller
                         window.location.href="/login";
                     </script>';
         }
+    }
 
+    public function updateAccount(Request $req, $id)
+    {
+        $this->validate($req, [
+            'name' => 'required',
+            'mobile_number' => 'required|numeric',
+            'email' => 'required|email|max:255',
+            'address' => 'required',
+        ]);
+        //return $req->input();
+        $user = User::find($id);
+        $user->name = $req->name;
+        $user->mobile = $req->mobile_number;
+        $user->email = $req->email;
+        $user->address = $req->address;                 // Hash is used to encrypt password. To decrypt password, '$req->password;'
+        $user->save();
+        return '<script>
+                    alert("Details updated"); 
+                    window.location.href="/";
+                </script>';
+    }
         // $user =  User::where(['email'=>$req->email])->first();
         // if($req->email == 'admin@gmail.com' && Hash::check($req->password,$user->password))
         // {
@@ -61,7 +89,6 @@ class UserController extends Controller
         //                 window.location.href="/login";
         //             </script>';
         // }
-    }
 
     // public function logout()
     // {

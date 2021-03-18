@@ -43,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/myorders',[ProductController::class, 'myOrders']);
     Route::get('/removeorder/{id}',[ProductController::class, 'removeOrder']);
     Route::get('/order/pdf/{id}',[ProductController::class, 'exportPDF']);
+
+    Route::get('/account', function () {  return view('account');   })->name('account');
+    Route::put('/account/{id}',[UserController::class, 'updateAccount']);
     Route::get('/logout', function () {     Auth::logout();     return redirect('login');   });
 });
 Route::get('/contact', function () {  return view('contact');   });

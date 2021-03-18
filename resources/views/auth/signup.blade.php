@@ -13,23 +13,37 @@
                     <div class="icon1">
 						<span class="fa fa-user"></span>
 						<input type="text" placeholder="Full Name" required="" name="name"/>
+						@error("name")
+							<p style="color:red">{{$errors->first("name")}}</p>
+						@enderror
                     </div>
                     <div class="icon1">
 						<span class="fa fa-mobile-phone" style="font-size: 24px;"></span>
 						<input type="text" placeholder="Mobile Number" required="" name="mobile_number"/>
+						@error("mobile_number")
+							<p style="color:red">{{$errors->first("mobile_number")}}</p>
+						@enderror
 					</div>
 					<div class="icon1">
 						<span class="fa fa-envelope"></span>
 						<input type="email" placeholder="Email Address" required="" name="email"/>
+						@error("email")
+							<p style="color:red">{{$errors->first("email")}}</p>
+						@enderror
 					</div>
-					
 					<div class="icon1">
 						<span class="fa fa-address-card"></span>
 						<textarea name="address" class="form-control border-0" rows="4" placeholder="Enter Delivery Address Here..." required=""></textarea>
+						@error("address")
+							<p style="color:red">{{$errors->first("address")}}</p>
+						@enderror
 					</div>
 					<div class="icon1">
 						<span class="fa fa-lock"></span>
 						<input type="password" placeholder="Password" required="" name="password"/>
+						@error("password")
+							<p style="color:red">{{$errors->first("password")}}</p>
+						@enderror
 					</div>
 					<div class="login-check">
 						 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i> Remember Me</label>
