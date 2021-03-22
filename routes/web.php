@@ -40,11 +40,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/removecart/{id}',[ProductController::class, 'removeCart']);
     Route::get('/checkout',[ProductController::class, 'checkout']);
     Route::post('/placeorder',[ProductController::class, 'placeOrder']);
+    Route::get('/buy/{id}',[ProductController::class, 'buyNow']);
+    Route::post('/placeoneorder',[ProductController::class, 'placeOneOrder']);
     Route::get('/myorders',[ProductController::class, 'myOrders']);
     Route::get('/removeorder/{id}',[ProductController::class, 'removeOrder']);
     Route::get('/order/pdf/{id}',[ProductController::class, 'exportPDF']);
-
-    Route::get('/account', function () {  return view('account');   })->name('account');
+    
+    Route::get('/account', function () {  return view('auth.account');   })->name('account');
     Route::put('/account/{id}',[UserController::class, 'updateAccount']);
     Route::get('/logout', function () {     Auth::logout();     return redirect('login');   });
 });

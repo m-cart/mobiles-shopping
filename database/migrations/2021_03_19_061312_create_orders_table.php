@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');       //default constrained() means references 'id' on 'users' table. To customize table name type constrained('table_name'). onDelete('cascade') means if we delete a user then we want to delete that user's orders too.
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('payment_method');
+            $table->string('payment_status');
             $table->string('address');
             $table->string('status');
             $table->timestamps();

@@ -57,7 +57,7 @@
                                 </button>
                             </form> --}}
 						</div>
-						<div class="buyhny-now"> <a href="#" class="action btn">Buy Now </a></div>
+						<div class="buyhny-now"> <a href="/buy/{{$product->id}}" class="action btn">Buy Now </a></div>
 					</div>
 				</div>
 				<div class="col-lg-7 single-right-left pl-lg-4">

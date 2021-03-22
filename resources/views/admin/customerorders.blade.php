@@ -7,7 +7,7 @@
                     <table class="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
                                     <h3 class="text-center text-info display-4"><b>Customer's Orders!</b></h3>
                                 </td>
                             </tr>
@@ -19,7 +19,7 @@
                                 <th>Payment Method</th>
                                 <th>Payment Status</th>
                                 <th>Address</th>
-                                <th>Status</th>
+                                <th>Delivery Status</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -78,10 +78,6 @@ class ProductController extends Controller
          ->join('products','cart.product_id','=','products.id')
          ->where('cart.user_id',$userId)
          ->sum('products.product_new_price');
- 
-        // $total =$user->user()->carts()->product()->sum('product_new_price');
-        // $total = Cart::product()->where('user_id',$userId)->sum('product_new_price');
-        // $total = Auth::user()->product()->sum('product_new_price');
         return view('checkout',['total'=>$total,'user'=>$user]);
     }
 
@@ -90,9 +86,9 @@ class ProductController extends Controller
         $userId = Auth::id();
         $user = Auth::user();
         $total = DB::table('cart')
-         ->join('products','cart.product_id','=','products.id')
-         ->where('cart.user_id',$userId)
-         ->sum('products.product_new_price');
+                ->join('products','cart.product_id','=','products.id')
+                ->where('cart.user_id',$userId)
+                ->sum('products.product_new_price');
         $allCart = Cart::where('user_id',$userId)->get();
         foreach($allCart as $cart)
         {
@@ -106,6 +102,7 @@ class ProductController extends Controller
             $order->save();
             Cart::where('user_id',$userId)->delete(); 
         }
+
         if($req->payment=='Debit Card')
         {
             Mail::to($user)->send(new OrderPlaced());
@@ -115,7 +112,44 @@ class ProductController extends Controller
             Mail::to($user)->send(new OrderPlaced());
             return '<script>
                         alert("Your orders has been successfully placed. Please click My Orders to track your orders.");
-                        window.location.href="/";
+                        window.location.href="/myorders";
+                    </script>';
+        }
+        
+    }
+
+    public function buyNow($id)
+    {
+        $userId = Auth::id();
+        $user = User::find($userId);
+        $product = Product::find($id);
+        return view('buynow',['user'=>$user,'product'=>$product]);
+    }
+
+    public function placeOneOrder(Request $req)         //User who directly coming from 'Buy Now' link, not from cart
+    {
+        $userId = Auth::id();
+        $user = Auth::user();
+        $total = $req->product_price;
+        $order= new Order;
+        $order->product_id=$req->product_id;
+        $order->user_id=$userId;
+        $order->payment_method=$req->payment;
+        $order->address=$req->address;
+        $order->status="Pending";
+        $order->payment_status="Pending";
+        $order->save();
+
+        if($req->payment=='Debit Card')
+        {
+            Mail::to($user)->send(new OrderPlaced());
+            return redirect()->route('stripe', ['price' => $total]);
+        }
+        else if($req->payment=='Cash on Delivery') {
+            Mail::to($user)->send(new OrderPlaced());
+            return '<script>
+                        alert("Your orders has been successfully placed. Please click My Orders to track your orders.");
+                        window.location.href="/myorders";
                     </script>';
         }
     }
